@@ -1,0 +1,150 @@
+@charset "utf-8";
+/* @import url("https://fonts.googleapis.com/css?family=Poiret+One"); */
+/* @import url("https://fonts.googleapis.com/css?family=Quicksand"); */
+@import url("https://fonts.googleapis.com/css?family=Crimson+Text");
+@import url("https://fonts.googleapis.com/earlyaccess/sawarabimincho.css");
+
+
+/* common */
+
+#container {
+  width: 232px;
+  margin: 30px auto;
+}
+
+body {
+  background-color: #eee;
+  background-image: url("../img/canvas.jpg");
+  background-size: cover;
+	color: #000;
+	font-family: "Crimson Text", serif, "Sawarabi Mincho";
+  font-size: 16px;
+}
+
+h1 {
+  float: left;
+  font-size: 20px;
+  margin: 15px auto;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  margin: 15px 0;
+}
+
+span {
+  /* background: #75d16a; green */
+  background: #adff66;
+  /* background: skyblue; skyblue*/
+  /* background: #cff; */
+  /* background: #cce7ff; */
+  /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
+  /* box-shadow: 1px 1px 1px rgba(0,0,0,0.24); */
+  display: inline-block;
+  line-height: 1;
+  padding: 5px;
+  position: relative;
+  width: 200px;
+  word-wrap: break-word;
+}
+
+span:after{
+  background: rgba(0,0,0,0.5);
+  bottom: 5px;
+  box-shadow: 0 4px 3px rgba(0,0,0,0.3);
+  content:"";
+  display:block;
+  height: 15px;
+  position: absolute;
+  right: 0;
+  transform: rotate(2deg);
+  width: 99%;
+  z-index: -1;
+}
+
+.box {
+  height: 100vh;
+  width: 100vw;
+}
+
+.container {
+  margin: 0 auto;
+  width: 246px;
+}
+
+.font-awesome {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  /* color: #41BAFA; 水色 */
+  color: #ccc;
+  cursor: pointer;
+  font-family: "Font Awesome 5 Free";
+}
+
+#new_sticky_note_form > .font-awesome {
+  display: none;
+}
+
+.btn {
+  width: 100px;
+  padding: 7px;
+  border-radius: 5px;
+  color: #fff;
+  background: #00aaff;
+  box-shadow: 0 3px 0 #0088cc;
+  cursor: pointer;
+  margin: 0 auto 15px;
+}
+
+.btn:hover {
+  opacity: 0.5;
+}
+
+.signup {
+  font-size: 12px;
+}
+
+.error {
+  color: #ff3d00;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+#new_sticky_note {
+  border: none;
+  border-radius: 5px;
+  display: inline-block;
+  height: 16px;
+  padding: 5px;
+  width: 200px;
+}
+
+#new_sticky_note:placeholder-shown {
+  font-family: "Crimson Text", serif, "Sawarabi Mincho";
+}
+
+#sticky_note_template {
+  display: none;
+}
+
+#logout {
+  color: #ccc;
+  float: right;
+  margin-top: 20px;
+  margin-right: 2px; 
+}
+
+.clear {
+  clear: both;
+}
