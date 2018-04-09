@@ -24,7 +24,15 @@ class Signup extends \Wall\Controller {
       // echo $e->getMessage();
       // exit;
       $this->setErrors('name', $e->getMessage());
+    } catch (\Wall\Exception\InvalidNameEnglish $e) {
+      // echo $e->getMessage();
+      // exit;
+      $this->setErrors('name', $e->getMessage());
     } catch (\Wall\Exception\InvalidDisplayName $e) {
+      // echo $e->getMessage();
+      // exit;
+      $this->setErrors('display_name', $e->getMessage());
+    } catch (\Wall\Exception\InvalidDisplayNameEnglish $e) {
       // echo $e->getMessage();
       // exit;
       $this->setErrors('display_name', $e->getMessage());
@@ -32,7 +40,15 @@ class Signup extends \Wall\Controller {
       // echo $e->getMessage();
       // exit;
       $this->setErrors('email', $e->getMessage());
+    } catch (\Wall\Exception\InvalidEmailEnglish $e) {
+      // echo $e->getMessage();
+      // exit;
+      $this->setErrors('email', $e->getMessage());
     } catch (\Wall\Exception\InvalidPassword $e) {
+      // echo $e->getMessage();
+      // exit;
+      $this->setErrors('password', $e->getMessage());
+    } catch (\Wall\Exception\InvalidPasswordEnglish $e) {
       // echo $e->getMessage();
       // exit;
       $this->setErrors('password', $e->getMessage());
@@ -54,7 +70,16 @@ class Signup extends \Wall\Controller {
           'email' => $_POST['email'],
           'password' => $_POST['password']
         ]);
+      } catch (\Wall\Exception\ThirdEmail $e) {
+        $this->setErrors('email', $e->getMessage());
+        return;
+      } catch (\Wall\Exception\ThirdEmailEnglish $e) {
+        $this->setErrors('email', $e->getMessage());
+        return;
       } catch (\Wall\Exception\DuplicateName $e) {
+        $this->setErrors('name', $e->getMessage());
+        return;
+      } catch (\Wall\Exception\DuplicateNameEnglish $e) {
         $this->setErrors('name', $e->getMessage());
         return;
       }
@@ -72,19 +97,43 @@ class Signup extends \Wall\Controller {
     }
 
     if (!preg_match('/\A[a-zA-Z0-9-_@\.]+\z/', $_POST['name'])) {
-      throw new \Wall\Exception\InvalidName;
+      if (strcmp(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2), 'ja') == 0) {
+        // japanese
+        throw new \Wall\Exception\InvalidName();
+      } else {
+        // japanese以外
+        throw new \Wall\Exception\InvalidNameEnglish();
+      }
     }
 
     if ((strlen(mb_convert_encoding($_POST['display_name'], 'SJIS', 'UTF-8')) > 20) || strlen(mb_convert_encoding($_POST['display_name'], 'SJIS', 'UTF-8')) === 0) {  // 全角...2, 半角...1
-      throw new \Wall\Exception\InvalidDisplayName;
+      if (strcmp(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2), 'ja') == 0) {
+        // japanese
+        throw new \Wall\Exception\InvalidDisplayName();
+      } else {
+        // japanese以外
+        throw new \Wall\Exception\InvalidDisplayNameEnglish();
+      }
     }
 
     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-      throw new \Wall\Exception\InvalidEmail;
+      if (strcmp(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2), 'ja') == 0) {
+        // japanese
+        throw new \Wall\Exception\InvalidEmail();
+      } else {
+        // japanese以外
+        throw new \Wall\Exception\InvalidEmailEnglish();
+      }
     }
 
     if (!preg_match('/\A[a-zA-Z0-9]{8,100}\z/', $_POST['password'])) {
-      throw new \Wall\Exception\InvalidPassword;
+      if (strcmp(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2), 'ja') == 0) {
+        // japanese
+        throw new \Wall\Exception\InvalidPassword();
+      } else {
+        // japanese以外
+        throw new \Wall\Exception\InvalidPasswordEnglish();
+      }
     }
   }
 

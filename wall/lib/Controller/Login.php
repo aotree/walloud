@@ -21,6 +21,8 @@ class Login extends \Wall\Controller {
       $this->_validate();
     } catch (\Wall\Exception\EmptyPost $e) {
       $this->setErrors('login', $e->getMessage());
+    } catch (\Wall\Exception\EmptyPostEnglish $e) {
+      $this->setErrors('login', $e->getMessage());
     }
 
     $this->setValues('name', $_POST['name']);
@@ -35,6 +37,9 @@ class Login extends \Wall\Controller {
           'password' => $_POST['password']
         ]);
       } catch (\Wall\Exception\UnmatchNameOrPassword $e) {
+        $this->setErrors('login', $e->getMessage());
+        return;
+      } catch (\Wall\Exception\UnmatchNameOrPasswordEnglish $e) {
         $this->setErrors('login', $e->getMessage());
         return;
       }
@@ -61,7 +66,13 @@ class Login extends \Wall\Controller {
     }
 
     if (!$_POST['name'] === '' || $_POST['password'] === '') {
-      throw new \Wall\Exception\EmptyPost();
+      if (strcmp(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2), 'ja') == 0) {
+        // japanese
+        throw new \Wall\Exception\EmptyPost();
+      } else {
+        // japanese以外
+        throw new \Wall\Exception\EmptyPostEnglish();
+      }
     }
   }
 
