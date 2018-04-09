@@ -11,4 +11,6 @@ define('SITE_URL', 'https://' . $_SERVER['HTTP_HOST']);
 require_once(__DIR__ . '/../lib/functions.php');
 require_once(__DIR__ . '/autoload.php');
 
+ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7); // session有効期限を1週間に設定 20180325 add
+ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7); // cookie有効期限を1週間に設定 20180325 add
 session_start();
