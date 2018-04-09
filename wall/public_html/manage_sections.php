@@ -6,11 +6,9 @@ $app = new Wall\Controller\Index();
 
 $app->run();
 
-// get sections, sticky_notes
+// get sections
 $sticky_note_app = new Wall\Model\StickyNote();
 $sections = $sticky_note_app->getSections();
-$section_display_name = $sticky_note_app->getSectionDisplayName();
-$sticky_notes = $sticky_note_app->getAll();
 
 ?>
 <!DOCTYPE html>
@@ -29,39 +27,42 @@ $sticky_notes = $sticky_note_app->getAll();
   <body>
     <div class="box">
       <div id="container">
-        <h1><?= h($section_display_name['display_name']); ?></h1>
+        <h1>± sections</h1>
         <ul id="normal" class="dropmenu">
           <li><a href="" id="logout" class="fas fa-bars font-awesome"></a>
-            <ul id="menu">
+            <ul id="sections">
               <?php foreach ($sections as $section) : ?>
-              <li class="section" data-id="<?= h($section->section_id); ?>"><?= h($section->display_name) ?></li>
+              <li class="section" id="section_<?= h($section->section_id); ?>" data-id="<?= h($section->section_id); ?>"><?= h($section->display_name) ?></li>
               <?php endforeach; ?>
-              <li><a href="manage_sections.php">± sections</a></li>
-              <li>
+              <li class="special" id="li_section"><a href="">± sections</a></li>
+              <li class="special">
                 <form action="logout.php" method="post">
                   <button type="submit">logout</button>
                   <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
                 </form>
               </li>
+              <li class="section" id="section_templete" data-id=""></li>
             </ul>
           </li>
         </ul>
         <div class="clear"></div>
         <form action="" id="new_sticky_note_form">
-          <input type="text" id="new_sticky_note" placeholder="...">
+          <input type="text" id="new_sticky_note" placeholder="display name">
           <button class="font-awesome" type="submit">&#xf0fe;</button>
         </form>
         <ul id="sticky_notes">
-        <?php foreach ($sticky_notes as $sticky_note) : ?>
-          <li id="sticky_note_<?= h($sticky_note->id); ?>" data-id="<?= h($sticky_note->id); ?>">
-            <span class="sticky_note_sentence"><?= h($sticky_note->sentence); ?>
-              <i class="fas fa-pencil-alt font-awesome update_sticky_note"></i>
+        <?php foreach ($sections as $section) : ?>
+          <li id="sticky_note_<?= h($section->section_id); ?>" data-id="<?= h($section->section_id); ?>">
+            <span class="sticky_note_sentence" style="background: #ff9"><?= h($section->display_name); ?>
+              <i class="fas fa-pencil-alt font-awesome update_sticky_note" style="color: #fc0 !important"></i>
             </span>
             <i class="far fa-check-circle font-awesome delete_sticky_note"></i>
           </li>
         <?php endforeach; ?>
           <li id="sticky_note_template" data-id="">
-            <span class="sticky_note_sentence"></span>
+            <span class="sticky_note_sentence" style="background: #ff9">
+              <i class="fas fa-pencil-alt font-awesome update_sticky_note" style="color: #fc0 !important"></i>
+            </span>
             <i class="far fa-check-circle font-awesome delete_sticky_note"></i>
           </li>
         </ul>
@@ -76,6 +77,6 @@ $sticky_notes = $sticky_note_app->getAll();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css">
     <!-- SweetAlert2(IE11やAndroidブラウザ用のjsファイル) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-    <script src="sticky_note.js"></script>
+    <script src="manage_sections.js"></script>
   </body>
 </html>

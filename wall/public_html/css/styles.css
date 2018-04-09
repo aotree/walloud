@@ -1,6 +1,4 @@
 @charset "utf-8";
-/* @import url("https://fonts.googleapis.com/css?family=Poiret+One"); */
-/* @import url("https://fonts.googleapis.com/css?family=Quicksand"); */
 @import url("https://fonts.googleapis.com/css?family=Crimson+Text");
 @import url("https://fonts.googleapis.com/earlyaccess/sawarabimincho.css");
 
@@ -10,15 +8,33 @@
 #container {
   width: 232px;
   margin: 30px auto;
+  padding-bottom: 20px;
 }
 
-body {
-  background-color: #eee;
-  background-image: url("../img/canvas.jpg");
-  background-size: cover;
-	color: #000;
-	font-family: "Crimson Text", serif, "Sawarabi Mincho";
-  font-size: 16px;
+@media screen and (max-width:450px) {
+  /* 画面サイズが0pxから450pxまではここを読み込む */
+  body {
+    position: static !important; /* SweetAlert2のiOSブランク背景問題解消用 参考<https://github.com/sweetalert2/sweetalert2/issues/473> */
+    background-color: #eee;
+    background-image: url("../img/canvas_under450.png");
+    /* background-size: cover; */
+    background-size: contain; /* 20180327 chg */
+  	color: #333;
+  	font-family: "Crimson Text", serif, "Sawarabi Mincho";
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width:451px) {
+  body {
+    background-color: #eee;
+    background-image: url("../img/canvas.jpg");
+    /* background-size: cover; */
+    background-size: contain; /* 20180327 chg */
+    color: #000;
+    font-family: "Crimson Text", serif, "Sawarabi Mincho";
+    font-size: 16px;
+  }
 }
 
 h1 {
@@ -38,17 +54,14 @@ li {
 
 span {
   /* background: #75d16a; green */
-  background: #adff66;
-  /* background: skyblue; skyblue*/
-  /* background: #cff; */
-  /* background: #cce7ff; */
-  /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
-  /* box-shadow: 1px 1px 1px rgba(0,0,0,0.24); */
+  /* background: #adff66; light green */
+  /* background: #bbff80; light green */
+  background: #c2eeff;
   display: inline-block;
   line-height: 1;
-  padding: 5px;
+  padding: 5px 25px 5px 5px;
   position: relative;
-  width: 200px;
+  width: 180px;
   word-wrap: break-word;
 }
 
@@ -58,12 +71,28 @@ span:after{
   box-shadow: 0 4px 3px rgba(0,0,0,0.3);
   content:"";
   display:block;
-  height: 15px;
+  /* height: 15px; */
+  height: 8px; /* 20180327 chg */
   position: absolute;
-  right: 0;
+  /* right: 0; */
+  right: 1px; /* 20180327 chg */
   transform: rotate(2deg);
-  width: 99%;
+  /* width: 99%; */
+  width: 93%; /* 20180327 chg */
   z-index: -1;
+}
+
+.update_sticky_note {
+  color: #0dd !important;
+  margin: 0px 3px;
+  position: absolute;
+  bottom: 5px;
+  right: 3px;
+}
+
+.delete_sticky_note {
+  vertical-align: middle;
+  margin-bottom: 4px;
 }
 
 .box {
@@ -80,7 +109,6 @@ span:after{
   width: 16px;
   height: 16px;
   font-size: 16px;
-  /* color: #41BAFA; 水色 */
   color: #ccc;
   cursor: pointer;
   font-family: "Font Awesome 5 Free";
@@ -118,6 +146,7 @@ span:after{
 button {
   background: none;
   border: none;
+	font-family: "Crimson Text", serif, "Sawarabi Mincho";
   padding: 0;
 }
 
@@ -134,7 +163,8 @@ button {
   font-family: "Crimson Text", serif, "Sawarabi Mincho";
 }
 
-#sticky_note_template {
+#sticky_note_template,
+#section_templete {
   display: none;
 }
 
@@ -142,9 +172,89 @@ button {
   color: #ccc;
   float: right;
   margin-top: 20px;
-  margin-right: 2px; 
+  margin-right: 2px;
 }
 
 .clear {
   clear: both;
+}
+
+/* sweet alert 2 */
+
+#swal2-content {
+  font-family: serif;
+  font-size: 16px;
+}
+
+.swal2-textarea {
+  font-family: serif;
+  font-size: 16px;
+}
+
+.swal2-cancel {
+  background-color: #efefef;
+  font-size: 14px;
+}
+
+/* drop menu */
+
+.dropmenu{
+  float: right;
+  margin-top: 0px;
+  margin-right: 0.5px;
+}
+
+.dropmenu li{
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.dropmenu li a{
+  color: #000;
+  text-decoration: none;
+}
+
+.dropmenu li ul{
+  list-style: none;
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  right: 15px;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.dropmenu li ul li{
+  opacity: 0.9;
+  background: #fff;
+  cursor: pointer;
+  width: 160px; /* 20180327 chg(MAXの長さが収まるように修正) */
+  padding: 3px 0;
+}
+
+.dropmenu li ul li button{
+  cursor: pointer;
+  height: 20px;
+  width: 140px;
+}
+
+.dropmenu li ul li a{
+  width: 140px;
+  display: inline-block;
+}
+
+.dropmenu li ul li:hover{
+  background: #eee;
+}
+
+#normal li ul{
+  display: none;
+}
+
+#normal li:hover ul{
+  display: block;
 }

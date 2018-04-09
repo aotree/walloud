@@ -1,14 +1,17 @@
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css?family=Poiret+One");
+@import url("https://fonts.googleapis.com/earlyaccess/sawarabimincho.css");
 
 /* common */
 
 body {
-  background-color: #eee;
-  background-image: url("../img/canvas.jpg");
+  background: -moz-linear-gradient(top left, #FFF, #FFC778);
+  background: -webkit-linear-gradient(top left, #FFF, #FFC778);
+  background: linear-gradient(to bottom right, #0b5de7, #043c9e);
+  background-attachment: fixed;
   background-size: cover;
-  color: #000;
-  font-family: "Poiret One", sans-serif;
+  color: #fff;
+  font-family: Arial Rounded MT Bold, sans-serif;
   font-size: 16px;
 }
 
@@ -32,9 +35,16 @@ body {
   text-align: center;
 }
 
-h1 {
+/* h1 {
   font-size: 20px;
   margin: 15px auto;
+  text-align: center;
+} */
+
+#description {
+  font-family: Arial Rounded MT Bold, "Sawarabi Mincho";
+  font-size: 12px;
+  margin: -10px 0 30px 0;
   text-align: center;
 }
 
@@ -80,7 +90,7 @@ button {
 }
 
 .button {
-  background: #0af;
+  background: #09f;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
@@ -106,11 +116,49 @@ button {
 }
 
 #login > a:link {
-  color: #000;
+  color: #fff;
 }
 
 #login > a:visited {
-  color: #000;
+  color: #fff;
+}
+
+#sns_buttons {
+  margin-top: 50px;
+  text-align: center;
+  width: 232px;
+}
+
+#my_tw {
+  display: block;
+  margin: 4px;
+}
+
+#my_fb {
+  display: block;
+  margin: 4px;
+}
+
+#footer {
+  margin-top: 10px;
+  font-size: 10px;
+  text-align: center;
+}
+
+#footer > a {
+  text-decoration: none;
+}
+
+#footer > a:visited {
+  color: #fff;
+}
+
+#footer > a:link {
+  color: #fff;
+}
+
+#footer > p {
+  margin-top: 5px;
 }
 
 /* tooltip */
@@ -121,7 +169,7 @@ div.tooltip {
 }
 
 div.tooltip span {
-	background-color: #0af;
+	background-color: #111;
 	border-radius:3px;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	color: #fff;
@@ -139,7 +187,7 @@ div.tooltip span {
 
 div.tooltip span:before{
 	border: 13px transparent solid;
-	border-left-color: #0af;
+	border-left-color: #111;
 	border-right-width: 0;
 	content: '';
 	display: block;

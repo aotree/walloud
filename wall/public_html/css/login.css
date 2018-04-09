@@ -5,11 +5,13 @@
 /* common */
 
 body {
-  background-color: #eee;
-  background-image: url("../img/canvas.jpg");
+  background: -moz-linear-gradient(top left, #FFF, #FFC778);
+  background: -webkit-linear-gradient(top left, #FFF, #FFC778);
+  background: linear-gradient(to bottom right, #0b5de7, #043c9e);
+  background-attachment: fixed;
   background-size: cover;
-  color: #000;
-  font-family: "Poiret One", sans-serif;
+  color: #fff;
+  font-family: Arial Rounded MT Bold, sans-serif;
   font-size: 16px;
 }
 
@@ -40,7 +42,7 @@ body {
 } */
 
 #description {
-  font-family: serif, "Sawarabi Mincho";
+  font-family: Arial Rounded MT Bold, "Sawarabi Mincho";
   font-size: 12px;
   margin: -10px 0 30px 0;
   text-align: center;
@@ -88,7 +90,7 @@ button {
 }
 
 .button {
-  background: #0af;
+  background: #09f;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
@@ -114,11 +116,11 @@ button {
 }
 
 #signup > a:link {
-  color: #000;
+  color: #fff;
 }
 
 #signup > a:visited {
-  color: #000;
+  color: #fff;
 }
 
 #sns_buttons {
@@ -148,15 +150,27 @@ button {
 }
 
 #footer > a:visited {
-  color: #000;
+  color: #fff;
 }
 
 #footer > a:link {
-  color: #000;
+  color: #fff;
 }
 
 #footer > p {
   margin-top: 5px;
+}
+
+.app_store {
+  width: 120px !important;
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width:1200px) {
+  .app_store {
+    display: none !important;
+  }
 }
 
 /* error message */
