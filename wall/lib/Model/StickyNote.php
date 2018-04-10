@@ -70,6 +70,9 @@ class StickyNote {
     }
 
     switch ($_POST['mode']) {
+    // 20180410 add
+      case 'sort':
+        return $this->_sort();
       case 'create':
         return $this->_create();
         // 20180327 add
@@ -99,6 +102,74 @@ class StickyNote {
       $_SESSION['token'] !== $_POST['token']
     ) {
       throw new \Exception('invalid token!');
+    }
+  }
+
+  private function _sort() {
+    if($_POST['sort_values']){
+      //$_POST['result']内にはliのIDが上から順番コンマ区切りの文字列で格納されています。
+      //1,2,3,4 だったものを 4,2,1,3　と並び替えれば　$_POST['result']="4,2,1,3"です。
+
+      $sort_values = $_POST['sort_values'];
+
+      //順に処理するために配列に格納
+      // foreach ($sort_values as $sort_value) {
+      //   var_dump($sort_value[0]);
+      // }
+      // $result_array = explode(',', $result);
+      // var_dump($result_array);
+      // $nom = 1; //idに対して番号を１からふる
+      // foreach($result_array as $no){
+      //   //この中で適宜DBに格納する処理
+      //   //"UPDATE テーブル名 SET no='$nom' WHERE id='$no'";
+      //   $nom++;//$nomを１つずつ増やしていく
+      // }
+      $sql = sprintf("select * from sticky_notes where wall_id = %d and section_id = %d order by id", $_SESSION['me']->id, $_SESSION['section']);
+      $stmt = $this->_db->query($sql);
+      $fetch_all = $stmt->fetchAll(\PDO::FETCH_OBJ);
+
+      $fetch_created = array();
+      $fetch_modified = array();
+      $fetch_id = array();
+      $sort_i = 0;
+      foreach ($fetch_all as $fetch_value) {
+        foreach ($sort_values as $sort_value) {
+          if ($sort_value == $fetch_value->sentence) {
+            echo $sort_value;
+            echo $fetch_value->sentence;
+            echo "----------";
+            $fetch_created[$fetch_value->sentence] = $fetch_value->created;
+            $fetch_modified[$fetch_value->sentence] = $fetch_value->modified;
+            // $fetch_id[$sort_i] = $fetch_value->id;
+          }
+        }
+        $sort_i++;
+      }
+      // var_dump($fetch_id);
+      // var_dump($fetch_modified);
+      $sort_i = 0;
+      // var_dump($fetch_created[$fetch_id[$sort_i]]);
+      foreach ($fetch_all as $fetch_value) {
+        // $sort_i_before = $fetch_id[$sort_i];
+        // echo $sort_i_before;
+        // echo $fetch_created[$fetch_value->sentence];
+      //   // echo $fetch_value->id;
+      //   // echo $sort_values[$sort_i];
+
+        $sql = sprintf("update sticky_notes set sentence = :sentence, created = :created, modified = :modified where wall_id = :wall_id and section_id = :section_id and id = :id");
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute([
+          ':sentence' => $sort_values[$sort_i],
+          ':wall_id' => $_SESSION['me']->id,
+          ':section_id' => $_SESSION['section'],
+          ':created' => $fetch_created[$sort_values[$sort_i]],
+          ':modified' => $fetch_modified[$sort_values[$sort_i]],
+          ':id' => $fetch_value->id
+        ]);
+        $sort_i++;
+      }
+
+      return [];
     }
   }
 
