@@ -18,10 +18,31 @@ $(function() {
 
   $('#new_sticky_note').val('').focus();
 
+  // move_section
   $(document).on('click', '.section', function() {
     $.post('/../_ajax.php', {
       section_id: $(this).data('id'),
       mode: 'section',
+      token: $('#token').val()
+    }, function() {
+      location.reload();
+    });
+  });
+
+  // sort
+  $(".sortable").sortable();
+  $(".sortable").disableSelection();
+  $('.sortable').bind('sortstop', function (e, ui) {
+    var sort_result = $(".sortable").sortable("toArray");
+    var sort_values = [];
+    for(var i = 0; i < sort_result.length - 1; i++) {
+      sort_values.push(document.getElementById(sort_result[i]).getAttribute('value'));
+    }
+
+    // ajax処理
+    $.post('/../_ajax.php', {
+      sort_values: sort_values,
+      mode: 'sort',
       token: $('#token').val()
     }, function() {
       location.reload();
@@ -116,6 +137,7 @@ $(function() {
             token: $('#token').val()
           }, function() {
             $('#sticky_note_' + id).find('.sticky_note_sentence').text(sentence);
+            $('#sticky_note_' + id).attr('value', sentence);
             $('#sticky_note_' + id).find('.sticky_note_sentence').append(' <i class="fas fa-pencil-alt font-awesome update_sticky_note"></i>');
           });
         } else {
@@ -149,6 +171,7 @@ $(function() {
             token: $('#token').val()
           }, function() {
             $('#sticky_note_' + id).find('.sticky_note_sentence').text(sentence);
+            $('#sticky_note_' + id).attr('value', sentence);
             $('#sticky_note_' + id).find('.sticky_note_sentence').append(' <i class="fas fa-pencil-alt font-awesome update_sticky_note"></i>');
           });
         } else {
@@ -196,9 +219,11 @@ $(function() {
               $li
                 .attr('id', 'sticky_note_' + res)
                 .attr('data-id', res)
+                .attr('value', sentence)
                 .find('.sticky_note_sentence').text(sentence)
                 .append(' <i class="fas fa-pencil-alt font-awesome update_sticky_note"></i>');
-              $('#sticky_notes').append($li.fadeIn());
+              // $('#sticky_notes').append($li.fadeIn());
+              $('#sticky_note_template').before($li.fadeIn());
               $('#new_sticky_note').val('').focus();
             });
           } else {
@@ -237,9 +262,11 @@ $(function() {
               $li
                 .attr('id', 'sticky_note_' + res)
                 .attr('data-id', res)
+                .attr('value', sentence)
                 .find('.sticky_note_sentence').text(sentence)
                 .append(' <i class="fas fa-pencil-alt font-awesome update_sticky_note"></i>');
-              $('#sticky_notes').append($li.fadeIn());
+              // $('#sticky_notes').append($li.fadeIn());
+              $('#sticky_note_template').before($li.fadeIn());
               $('#new_sticky_note').val('').focus();
             });
           } else {

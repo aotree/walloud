@@ -51,25 +51,30 @@ $sticky_notes = $sticky_note_app->getAll();
           <input type="text" id="new_sticky_note" placeholder="...">
           <button class="font-awesome" type="submit">&#xf0fe;</button>
         </form>
-        <ul id="sticky_notes">
+        <form action="" id="sort" method="post">
+        <ul class="sortable" id="sticky_notes">
         <?php foreach ($sticky_notes as $sticky_note) : ?>
-          <li id="sticky_note_<?= h($sticky_note->id); ?>" data-id="<?= h($sticky_note->id); ?>">
+          <li id="sticky_note_<?= h($sticky_note->id); ?>" data-id="<?= h($sticky_note->id); ?>" value="<?= h($sticky_note->sentence); ?>">
             <span class="sticky_note_sentence"><?= h($sticky_note->sentence); ?>
               <i class="fas fa-pencil-alt font-awesome update_sticky_note"></i>
             </span>
             <i class="far fa-check-circle font-awesome delete_sticky_note"></i>
           </li>
         <?php endforeach; ?>
-          <li id="sticky_note_template" data-id="">
+          <li id="sticky_note_template" data-id="" value="templete">
             <span class="sticky_note_sentence"></span>
             <i class="far fa-check-circle font-awesome delete_sticky_note"></i>
           </li>
         </ul>
+        </form>
       </div>
       <input type="hidden" id="token" value="<?= h($_SESSION['token']); ?>">
     </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script> -->
+    <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+    <script src="jquery.ui.touch-punch.min.js"></script>
     <!-- SweetAlert2(本体) -->
     <script src="sweetalert2.all.js"></script>
     <!-- SweetAlert2(CSS) -->
